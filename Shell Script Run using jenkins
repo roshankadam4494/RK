@@ -1,0 +1,78 @@
+SSH Key Setup: Set up SSH keys for password less authentication
+
+1.	Use the ssh-keygen command to create a new SSH key pair
+
+ssh-keygen
+Press Enter to accept the default file location (~/.ssh/id_rsa).
+Optionally, enter a passphrase for added security, or press Enter twice for no passphrase
+
+2.	Copy the Public Key to the Remote Server
+ssh-copy-id root@192.168.1.143
+Enter the password for the remote server when prompted.
+
+3.	Log in to the remote server
+ssh root@192.168.1.143
+Ensure the ~/.ssh directory and authorized_keys file have the correct permissions:
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+
+C.	Steps to Run the Shell Script on a Remote Server
+
+1.	Install SSH Plugin in Jenkins:
+
+•	Go to Jenkins dashboard.
+•	Click on "Manage Jenkins".
+•	Select "Manage Plugins".
+•	Go to the "Available" tab and search for "SSH".
+•	Install "SSH Plugin" (or "SSH Agent Plugin" if needed).
+
+2.	Configure SSH Credentials in Jenkins:
+
+•	Go back to "Manage Jenkins".
+•	Click on "Manage Credentials".
+•	Select the appropriate domain (e.g., "Global credentials (unrestricted)").
+•	Click "Add Credentials".
+•	Select "SSH Username with private key" from the dropdown.
+•	Username: Enter the username for SSH.
+•	Private Key: Enter directly or use "Enter directly" to paste the key.
+•	ID: Give an ID (optional but useful for reference).
+
+3.	Create a New Jenkins Job:
+
+•	Go back to Jenkins dashboard.
+•	Click "New Item".
+•	Enter a name for the job, select "Freestyle project", and click "OK".
+
+4.	Configure the Job to Use SSH:
+
+•	In the job configuration page, scroll down to the "Build" section.
+•	Click on "Add build step" and select "Send files or execute commands over SSH" (provided by the SSH plugin).
+
+5.	Add SSH Server Details:
+
+•	Click "Add" to add a new SSH server.
+•	Name: Give a name for the server.
+•	Hostname: Enter the IP address or hostname of the remote server.
+•	Username: Enter the username for SSH access.
+•	Credentials: Select the credentials you added earlier.
+•	Click "Test Configuration" to ensure Jenkins can connect to the remote server.
+
+6.	Execute Shell Command on Remote Server:
+
+•	Under "Exec command", enter the command to run your script on the remote server. For example: (Ensure the script path is correct and the script has executed permissions)
+/path/to/your/remote/script.sh
+
+7.	Save the Job Configuration:
+•	Scroll down and click "Save".
+
+8.	Build the Job:
+•	On the job page, click "Build Now" to run the job immediately.
+
+9.	Check Build Output:
+
+•	Once the build is complete, you can view the console output by clicking on the build number in the "Build History" and then selecting "Console Output".
+
+Troubleshooting
+•	Connection Issues: Ensure that the Jenkins server can reach the remote server over SSH.
+•	Permissions: Verify that the SSH user has permission to execute the script on the remote server.
+•	Script Errors: Check the console output for any errors related to the script execution.

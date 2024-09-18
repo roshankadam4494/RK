@@ -76,3 +76,6 @@ Troubleshooting
 •	Connection Issues: Ensure that the Jenkins server can reach the remote server over SSH.
 •	Permissions: Verify that the SSH user has permission to execute the script on the remote server.
 •	Script Errors: Check the console output for any errors related to the script execution.
+
+
+MADE BY RK
